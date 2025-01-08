@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi Spotify</title>
+    <style>
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .profile { margin-bottom: 30px; }
+        .section { margin-bottom: 20px; }
+        .track-item { margin: 10px 0; }
+        .playlist-item { padding: 10px; border-bottom: 1px solid #eee; }
+        .player-container { margin: 20px 0; }
+        .load-more { cursor: pointer; color: blue; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if user %}
+        <div class="profile">
+            <h1>¡Hola, {{ user.display_name }}!</h1>
+            {% if user.images %}
+                <img src="{{ user.images.0.url }}" width="100">
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if current_playback %}
+        <div class="section">
+            <h2>Reproduciendo ahora:</h2>
+            <div class="track-item">
+                {{ current_playback.item.name }} - {{ current_playback.item.artists.0.name }}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="section">
+            <h2>Tus Top Tracks:</h2>
+            {% for track in top_tracks %}
+            <div class="track-item">
+                {{ track.name }} - {{ track.artists.0.name }}
+                <div class="player-container" id="player-{{ track.id }}">
+                    <button onclick="loadPlayer('{{ track.id }}', this)">
+                        Cargar reproductor
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h2>Tus Playlists:</h2>
+            {% for playlist in playlists %}
+            <div class="playlist-item">
+                <a href="{% url 'playlist_detail' playlist.id %}">
+                    {{ playlist.name }} ({{ playlist.tracks.total }} canciones)
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function loadPlayer(trackId, button) {
+            const container = button.parentElement;
+            container.innerHTML = `
+                <iframe 
+                    src="https://open.spotify.com/embed/track/${trackId}" 
+                    width="300" 
+                    height="80" 
+                    frameborder="0" 
+                    allowtransparency="true" 
+                    allow="encrypted-media">
+                </iframe>
+            `;
+        }
+    </script>
+</body>
+</html> 
