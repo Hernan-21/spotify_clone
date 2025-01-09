@@ -15,7 +15,6 @@
             <h3>{track.name}</h3>
             <p>{track.artists.map(artist => artist.name).join(', ')}</p>
           </div>
-          <!-- svelte-ignore a11y_missing_attribute -->
           <iframe
             src="https://open.spotify.com/embed/track/{track.id}"
             width="100%"
@@ -23,6 +22,7 @@
             frameBorder="0"
             allowTransparency={true}
             allow="encrypted-media"
+            title={`Play ${track.name} by ${track.artists[0].name}`}
           ></iframe>
         </div>
       {/each}

@@ -42,7 +42,7 @@
       {:else if error}
         <div class="error">Error: {error}</div>
       {:else if data}
-        <TopTracks tracks={data.top_tracks} />
+        <TopTracks tracks={data.top_tracks} currentTrack={null} />
         <NewReleases releases={data.new_releases} />
         <Categories categories={data.categories} />
         <Playlists playlists={data.playlists} />
