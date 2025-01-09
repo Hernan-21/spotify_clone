@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from .spotify_client import get_spotify_client
-from django.views.decorators.cache import cache_page
+from django.shortcuts import render, redirect # type: ignore
+from django.http import HttpResponse # type: ignore
+from .spotify_client import get_spotify_client # type: ignore
+from django.views.decorators.cache import cache_page # type: ignore
 
 # Cachear la vista por 60 segundos para evitar demasiadas peticiones
 @cache_page(60)
